@@ -1,7 +1,9 @@
-require 'typhoeus'
+require 'httparty'
 require 'json'
 
 module EasyPost
+  include HTTParty
+
   @@api_key = "..."
   @@api_base = 'https://www.geteasypost.com/api/'
 
@@ -37,14 +39,16 @@ module EasyPost
   end
 
   def self.get(url, params={})
-    params = {:userpwd => @@api_key, :params => params}
-    @response = Typhoeus::Request.get(url, params)
+    @auth = {username: @@api_key, password: ""}
+    params = {:basic_auth => @auth, :params => params}
+    @response = self.class.get(url, params)
     return EasyPost.symbolize_keys_recursive(JSON.parse(@response.body))
   end
 
   def self.post(url, params={})
-    params = {:userpwd => @@api_key, :params => params}
-    @response = Typhoeus::Request.post(url, params)
+    @auth = {username: @@api_key, password: ""}
+    params = {:basic_auth => @auth, :params => params}
+    @response = self.class.post(url, params)
     return EasyPost.symbolize_keys_recursive(JSON.parse(@response.body))
   end
 
