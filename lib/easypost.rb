@@ -2,7 +2,9 @@ require 'httparty'
 require 'json'
 
 module EasyPost
-  include HTTParty
+  class HTTPUtil
+    include HTTParty
+  end
 
   @@api_key = "..."
   @@api_base = 'https://www.geteasypost.com/api/'
@@ -41,14 +43,14 @@ module EasyPost
   def self.get(url, params={})
     @auth = {username: @@api_key, password: ""}
     params = {:basic_auth => @auth, :params => params}
-    @response = self.class.get(url, params)
+    @response = EasyPost::HTTPUtil.class.get(url, params)
     return EasyPost.symbolize_keys_recursive(JSON.parse(@response.body))
   end
 
   def self.post(url, params={})
     @auth = {username: @@api_key, password: ""}
     params = {:basic_auth => @auth, :params => params}
-    @response = self.class.post(url, params)
+    @response = EasyPost::HTTPUtil.class.post(url, params)
     return EasyPost.symbolize_keys_recursive(JSON.parse(@response.body))
   end
 
