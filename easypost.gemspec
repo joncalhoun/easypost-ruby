@@ -14,5 +14,4 @@ Gem::Specification.new do |s|
                   ]
   s.require_path = 'lib'
   s.homepage    = 'https://www.geteasypost.com/docs'
-  s.add_dependency('httparty')
 end
