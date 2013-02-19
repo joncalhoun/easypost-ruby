@@ -1,4 +1,3 @@
-require 'httparty'
 require 'json'
 
 module EasyPost
