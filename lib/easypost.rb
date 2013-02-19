@@ -42,14 +42,14 @@ module EasyPost
 
   def self.get(url, params={})
     @auth = {username: @@api_key, password: ""}
-    params = {:basic_auth => @auth, :params => params}
+    params = {:basic_auth => @auth, :query => params}
     @response = EasyPost::HTTPUtil.get(url, params)
     return EasyPost.symbolize_keys_recursive(JSON.parse(@response.body))
   end
 
   def self.post(url, params={})
     @auth = {username: @@api_key, password: ""}
-    params = {:basic_auth => @auth, :params => params}
+    params = {:basic_auth => @auth, :query => params}
     @response = EasyPost::HTTPUtil.post(url, params)
     return EasyPost.symbolize_keys_recursive(JSON.parse(@response.body))
   end
